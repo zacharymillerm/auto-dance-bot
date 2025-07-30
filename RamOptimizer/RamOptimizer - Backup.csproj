@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>dance.ico</ApplicationIcon>
-
     <AssemblyTitle>RAM Optimizer</AssemblyTitle>
     <AssemblyDescription>Automated RAM optimization tool with keyboard and mouse simulation</AssemblyDescription>
     <AssemblyCompany>Your Company</AssemblyCompany>
@@ -18,11 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="dance.png" />
-    <Resource Include="dance.ico" />
   </ItemGroup>
 
 </Project>
