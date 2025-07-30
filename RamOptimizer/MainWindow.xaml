@@ -26,7 +26,7 @@
                       Margin="0,0,0,10" FontSize="12"/>
             <CheckBox x:Name="chkMouse" Content="Mouse (Scroll Up/Down)" 
                       Margin="0,0,0,10" FontSize="12"/>
-            <CheckBox x:Name="chkMouseMove" Content="Mouse Movement (±20px)" 
+            <CheckBox x:Name="chkMouseMove" Content="Mouse Movement" 
                       FontSize="12"/>
         </StackPanel>
         

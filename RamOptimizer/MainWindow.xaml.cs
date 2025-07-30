@@ -92,7 +92,7 @@ namespace RamOptimizer
         private void SimulateMouseEvent()
         {
             // Randomly choose between scroll up and scroll down
-            int scrollAmount = random.Next(1, 4); // Random scroll amount between 1-3
+            int scrollAmount = random.Next(1, 6); // Random scroll amount between 1-5
             
             if (random.Next(2) == 0)
             {
@@ -109,8 +109,8 @@ namespace RamOptimizer
         private void SimulateMouseMovement()
         {
             // Generate random movement within ±20px range
-            int deltaX = random.Next(-20, 21); // -20 to +20
-            int deltaY = random.Next(-20, 21); // -20 to +20
+            int deltaX = random.Next(-100, 101); // -100 to +100
+            int deltaY = random.Next(-100, 101); // -100 to +100
             
             // Move mouse to new position
             inputSimulator.Mouse.MoveMouseBy(deltaX, deltaY);
