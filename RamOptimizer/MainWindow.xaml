@@ -1,0 +1,59 @@
+﻿<Window x:Class="RamOptimizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RamOptimizer"
+        mc:Ignorable="d"
+        Title="RAM Optimizer" Height="350" Width="250" ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="RAM Optimizer" FontSize="16" FontWeight="Bold" 
+                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        
+        <!-- Checkboxes -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <CheckBox x:Name="chkKeyboard" Content="Keyboard (Page Up/Down)" 
+                      Margin="0,0,0,10" FontSize="12"/>
+            <CheckBox x:Name="chkMouse" Content="Mouse (Scroll Up/Down)" 
+                      Margin="0,0,0,10" FontSize="12"/>
+            <CheckBox x:Name="chkMouseMove" Content="Mouse Movement (±20px)" 
+                      FontSize="12"/>
+        </StackPanel>
+        
+        <!-- Time Range Input -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <TextBlock Text="Time Range (seconds):" FontSize="12" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtTimeRange" Text="10" FontSize="12" 
+                     PreviewTextInput="TxtTimeRange_PreviewTextInput"/>
+        </StackPanel>
+        
+        <!-- Start/Stop Button -->
+        <Button Grid.Row="3" x:Name="btnStartStop" Content="Start" 
+                FontSize="14" FontWeight="Bold" Height="35" 
+                Click="BtnStartStop_Click" Background="#4CAF50" Foreground="White"/>
+        
+        <!-- Theme Toggle -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <TextBlock Text="Theme:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12"/>
+            <RadioButton x:Name="rbLightTheme" Content="Light" IsChecked="True" 
+                         Margin="0,0,10,0" FontSize="12" Checked="ThemeRadioButton_Checked"/>
+            <RadioButton x:Name="rbDarkTheme" Content="Dark" 
+                         FontSize="12" Checked="ThemeRadioButton_Checked"/>
+        </StackPanel>
+        
+        <!-- Status -->
+        <TextBlock Grid.Row="5" x:Name="txtStatus" Text="Ready to start..." 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   FontSize="12" Foreground="Gray" Margin="0,10,0,0"/>
+    </Grid>
+</Window>
