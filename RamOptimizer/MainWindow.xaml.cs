@@ -25,10 +25,13 @@ namespace RamOptimizer
     public partial class MainWindow : Window
     {
         private DispatcherTimer timer;
+        private DispatcherTimer countdownTimer;
         private InputSimulator inputSimulator;
         private Random random;
         private bool isRunning = false;
         private bool isDarkTheme = false;
+        private int timeRangeSeconds;
+        private int remainingSeconds;
 
         public MainWindow()
         {
@@ -42,6 +45,10 @@ namespace RamOptimizer
         {
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
+            
+            countdownTimer = new DispatcherTimer();
+            countdownTimer.Interval = TimeSpan.FromSeconds(1);
+            countdownTimer.Tick += CountdownTimer_Tick;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -67,10 +74,34 @@ namespace RamOptimizer
                 {
                     SimulateMouseMovement();
                 }
+                
+                // Reset countdown after action
+                remainingSeconds = timeRangeSeconds;
+                UpdateCountdownDisplay();
             }
             catch (Exception ex)
             {
                 txtStatus.Text = $"Error: {ex.Message}";
+            }
+        }
+
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            if (!isRunning) return;
+            
+            remainingSeconds--;
+            UpdateCountdownDisplay();
+        }
+
+        private void UpdateCountdownDisplay()
+        {
+            if (isRunning)
+            {
+                TimeSpan timeLeft = TimeSpan.FromSeconds(remainingSeconds);
+                string timeString = timeLeft.TotalSeconds >= 60 
+                    ? $"{timeLeft.Minutes:D2}:{timeLeft.Seconds:D2}" 
+                    : $"{remainingSeconds}s";
+                txtStatus.Text = $"Next move in: {timeString}";
             }
         }
 
@@ -80,12 +111,10 @@ namespace RamOptimizer
             if (random.Next(2) == 0)
             {
                 inputSimulator.Keyboard.KeyPress(VirtualKeyCode.PRIOR); // Page Up
-                txtStatus.Text = "Sent: Page Up";
             }
             else
             {
                 inputSimulator.Keyboard.KeyPress(VirtualKeyCode.NEXT); // Page Down
-                txtStatus.Text = "Sent: Page Down";
             }
         }
 
@@ -97,25 +126,21 @@ namespace RamOptimizer
             if (random.Next(2) == 0)
             {
                 inputSimulator.Mouse.VerticalScroll(scrollAmount); // Scroll up
-                txtStatus.Text = $"Sent: Scroll Up ({scrollAmount})";
             }
             else
             {
                 inputSimulator.Mouse.VerticalScroll(-scrollAmount); // Scroll down
-                txtStatus.Text = $"Sent: Scroll Down ({scrollAmount})";
             }
         }
 
         private void SimulateMouseMovement()
         {
-            // Generate random movement within ±20px range
-            int deltaX = random.Next(-100, 101); // -100 to +100
-            int deltaY = random.Next(-100, 101); // -100 to +100
+            // Generate random movement within ±50px range
+            int deltaX = random.Next(-50, 51); // -50 to +50
+            int deltaY = random.Next(-20, 21); // -20 to +20
             
             // Move mouse to new position
             inputSimulator.Mouse.MoveMouseBy(deltaX, deltaY);
-            
-            txtStatus.Text = $"Mouse moved: ({deltaX}, {deltaY})";
         }
 
 
@@ -149,15 +174,20 @@ namespace RamOptimizer
                 return;
             }
 
-            // Start the timer
+            // Initialize countdown
+            timeRangeSeconds = timeRange;
+            remainingSeconds = timeRange;
+
+            // Start the timers
             timer.Interval = TimeSpan.FromSeconds(timeRange);
             timer.Start();
+            countdownTimer.Start();
             isRunning = true;
 
             // Update UI
             btnStartStop.Content = "Stop";
             btnStartStop.Background = new SolidColorBrush(Colors.Gray);
-            txtStatus.Text = "Optimization started...";
+            UpdateCountdownDisplay();
             
             // Disable controls
             chkKeyboard.IsEnabled = false;
@@ -168,8 +198,9 @@ namespace RamOptimizer
 
         private void StopOptimization()
         {
-            // Stop the timer
+            // Stop the timers
             timer.Stop();
+            countdownTimer.Stop();
             isRunning = false;
 
             // Update UI
