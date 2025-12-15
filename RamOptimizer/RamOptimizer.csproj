@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>dance.ico</ApplicationIcon>
 
     <AssemblyTitle>RAM Optimizer</AssemblyTitle>
@@ -17,12 +18,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="InputSimulator" Version="1.0.4" />
+    <PackageReference Include="InputSimulatorCore" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="dance.png" />
     <Resource Include="dance.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="dance.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
